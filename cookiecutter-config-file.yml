@@ -1,0 +1,13 @@
+# This file contains values from Cookiecutter
+
+default_context:
+  project_name: "optimize-it"
+  project_description: "Awesome `optimize-it` is a Python cli/package with optimization tools"
+  organization: "optimize-it"
+  license: "MIT"
+  minimal_python_version: 3.10
+  github_name: "optimize_it"
+  email: "gust.nagel@gmail.com"
+  version: "0.1.0"
+  line_length: "100"
+  create_example_template: "cli"
