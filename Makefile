@@ -10,11 +10,11 @@ VERSION := latest
 #* Poetry
 .PHONY: poetry-download
 poetry-download:
-	curl -sSL curl -sSL https://install.python-poetry.org | $(PYTHON) -
+	curl -sSL https://install.python-poetry.org | $(PYTHON) -
 
 .PHONY: poetry-remove
 poetry-remove:
-	curl -sSL curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
+	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
 
 #* Installation
 .PHONY: install
