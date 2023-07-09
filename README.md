@@ -10,7 +10,7 @@
 [![Security: bandit](https://img.shields.io/badge/security-bandit-green.svg)](https://github.com/PyCQA/bandit)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/optimize_it/optimize-it/blob/master/.pre-commit-config.yaml)
 [![Semantic Versions](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--versions-e10079.svg)](https://github.com/optimize_it/optimize-it/releases)
-[![License](https://img.shields.io/github/license/optimize_it/optimize-it)](https://github.com/optimize_it/optimize-it/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/optimize_it/optimize-it)](https://github.com/GustavoNagel/optimize-it/blob/master/LICENSE)
 ![Coverage Report](assets/images/coverage.svg)
 
 Awesome `optimize-it` is a Python cli/package with optimization tools
@@ -51,9 +51,9 @@ make codestyle
 ```bash
 git add .
 git commit -m ":tada: Initial commit"
-git branch -M main
+git branch -M master
 git remote add origin https://github.com/optimize_it/optimize-it.git
-git push -u origin main
+git push -u origin master
 ```
 
 ### Set up bots
