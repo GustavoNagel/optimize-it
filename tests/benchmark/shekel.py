@@ -2,7 +2,7 @@ import numpy as np
 import numpy.typing as npt
 
 
-def shekel(x: npt.NDArray[np.float64], m: int = 10) -> int:
+def shekel(x: npt.NDArray[np.float64], m: int = 10) -> np.float64:
     """Shekel.
 
     The number of variables n = 4
@@ -27,4 +27,4 @@ def shekel(x: npt.NDArray[np.float64], m: int = 10) -> int:
         ]
     )
     c = np.array([1, 2, 2, 4, 4, 6, 3, 7, 5, 5]) * 0.1
-    return -sum(1 / (sum((x - a[j]) ** 2) + c[j]) for j in range(m))
+    return -sum(1 / (((x - a[j]) ** 2).sum() + c[j]) for j in range(m))  # type: ignore [no-any-return]

@@ -16,6 +16,6 @@ from tests.benchmark.shekel import shekel as shekel_func
     ]
 )
 def shekel(request: pytest.FixtureRequest) -> Iterator[dict[str, Any]]:
-    shekel_data = {"func": partial(shekel_func, m=request.param.pop("m"))}  # type: ignore[attr-defined]
-    shekel_data.update(request.param)  # type: ignore[attr-defined]
+    shekel_data = {"func": partial(shekel_func, m=request.param.pop("m"))}
+    shekel_data.update(request.param)
     yield shekel_data

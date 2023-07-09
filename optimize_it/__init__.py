@@ -1,4 +1,3 @@
-# type: ignore[attr-defined]
 """Awesome `optimize-it` is a Python cli/package with optimization tools"""
 
 import sys
