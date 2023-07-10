@@ -47,7 +47,7 @@ class BSA:
         seeded with `seed`.
         If `seed` is already a ``Generator`` or ``RandomState`` instance then
         that instance is used.
-        Specify `seed` for repeatable minimizations. The random numbers
+        Specify `seed` for repeatable minimization. The random numbers
         generated with this seed only affect the visiting distribution function
         and new coordinates generation.
 
