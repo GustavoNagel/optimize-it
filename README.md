@@ -7,42 +7,38 @@
 [![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/optimize_it/optimize-it/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Security: bandit](https://img.shields.io/badge/security-bandit-green.svg)](https://github.com/PyCQA/bandit)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/optimize_it/optimize-it/blob/master/.pre-commit-config.yaml)
 [![Semantic Versions](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--versions-e10079.svg)](https://github.com/optimize_it/optimize-it/releases)
 [![License](https://img.shields.io/github/license/optimize_it/optimize-it)](https://github.com/GustavoNagel/optimize-it/blob/master/LICENSE)
 ![Coverage Report](assets/images/coverage.svg)
 
-Awesome `optimize-it` is a Python cli/package with optimization tools
+Meta heuristic algorithms used for solving optimization problems.
 
 </div>
 
-## 🚀 Features
+## Basic usage
 
-### Development features
+Given one function to be minimized and the lower and upper bounds defining 
+search space to the algorithm, BSA algorithm can be called and minimum solution should be available.
 
-- Supports for `Python 3.10` and higher.
-- [`Poetry`](https://python-poetry.org/) as the dependencies manager. See configuration in [`pyproject.toml`](https://github.com/optimize_it/optimize-it/blob/master/pyproject.toml) and [`setup.cfg`](https://github.com/optimize_it/optimize-it/blob/master/setup.cfg).
-- Automatic codestyle with [`black`](https://github.com/psf/black), [`isort`](https://github.com/timothycrosley/isort) and [`pyupgrade`](https://github.com/asottile/pyupgrade).
-- Ready-to-use [`pre-commit`](https://pre-commit.com/) hooks with code-formatting.
-- Type checks with [`mypy`](https://mypy.readthedocs.io); docstring checks with [`darglint`](https://github.com/terrencepreilly/darglint); security checks with [`safety`](https://github.com/pyupio/safety) and [`bandit`](https://github.com/PyCQA/bandit)
-- Testing with [`pytest`](https://docs.pytest.org/en/latest/).
-- Ready-to-use [`.editorconfig`](https://github.com/optimize_it/optimize-it/blob/master/.editorconfig), [`.dockerignore`](https://github.com/optimize_it/optimize-it/blob/master/.dockerignore), and [`.gitignore`](https://github.com/optimize_it/optimize-it/blob/master/.gitignore). You don't have to worry about those things.
+```python
+    from scipy.optimize import Bounds, OptimizeResult
 
-### Deployment features
+    func = lambda x: x ** 4 + 4 * x ** 3 - 13 * x ** 2 - 14 * x + 24
+    bounds = Bounds(lb=np.array([-20]), ub=np.array([20]))
+    bsa = BSA(generations=500)
+    result = bsa.run(func, bounds)
 
-- `GitHub` integration: issue and pr templates.
-- `Github Actions` with predefined [build workflow](https://github.com/optimize_it/optimize-it/blob/master/.github/workflows/build.yml) as the default CI/CD.
-- Everything is already set up for security checks, codestyle checks, code formatting, testing, linting, docker builds, etc with [`Makefile`](https://github.com/optimize_it/optimize-it/blob/master/Makefile#L89). More details in [makefile-usage](#makefile-usage).
-- [Dockerfile](https://github.com/optimize_it/optimize-it/blob/master/docker/Dockerfile) for your package.
-- Always up-to-date dependencies with [`@dependabot`](https://dependabot.com/). You will only [enable it](https://docs.github.com/en/github/administering-a-repository/enabling-and-disabling-version-updates#enabling-github-dependabot-version-updates).
-- Automatic drafts of new releases with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter). You may see the list of labels in [`release-drafter.yml`](https://github.com/optimize_it/optimize-it/blob/master/.github/release-drafter.yml). Works perfectly with [Semantic Versions](https://semver.org/) specification.
+    assert isinstance(result, OptimizeResult)
+    print(result.x)  # Global minimum solution for function
+```
 
-### Open source community features
+Firefly algorithm is also available.
 
-- Ready-to-use [Pull Requests templates](https://github.com/optimize_it/optimize-it/blob/master/.github/PULL_REQUEST_TEMPLATE.md) and several [Issue templates](https://github.com/optimize_it/optimize-it/tree/master/.github/ISSUE_TEMPLATE).
-- Files such as: `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md` are generated automatically.
-- [Semantic Versions](https://semver.org/) specification with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter).
+```python
+    firefly = Firefly(generations=500)
+    result = firefly.run(func, bounds)
+```
 
 ## Installation
 
@@ -67,6 +63,33 @@ or with `Poetry`:
 ```bash
 poetry run optimize-it --help
 ```
+
+## 🚀 Features
+
+### Development features
+
+- Supports for `Python 3.10` and higher.
+- [`Poetry`](https://python-poetry.org/) as the dependencies manager. See configuration in [`pyproject.toml`](https://github.com/optimize_it/optimize-it/blob/master/pyproject.toml) and [`setup.cfg`](https://github.com/optimize_it/optimize-it/blob/master/setup.cfg).
+- Automatic codestyle with [`black`](https://github.com/psf/black), [`isort`](https://github.com/timothycrosley/isort) and [`pyupgrade`](https://github.com/asottile/pyupgrade).
+- Ready-to-use [`pre-commit`](https://pre-commit.com/) hooks with code-formatting.
+- Type checks with [`mypy`](https://mypy.readthedocs.io); docstring checks with [`darglint`](https://github.com/terrencepreilly/darglint);
+- Testing with [`pytest`](https://docs.pytest.org/en/latest/).
+- Ready-to-use [`.editorconfig`](https://github.com/optimize_it/optimize-it/blob/master/.editorconfig), [`.dockerignore`](https://github.com/optimize_it/optimize-it/blob/master/.dockerignore), and [`.gitignore`](https://github.com/optimize_it/optimize-it/blob/master/.gitignore). You don't have to worry about those things.
+
+### Deployment features
+
+- `GitHub` integration: issue and pr templates.
+- `Github Actions` with predefined [build workflow](https://github.com/optimize_it/optimize-it/blob/master/.github/workflows/build.yml) as the default CI/CD.
+- Everything is already set up for security checks, codestyle checks, code formatting, testing, linting, docker builds, etc with [`Makefile`](https://github.com/optimize_it/optimize-it/blob/master/Makefile#L89). More details in [makefile-usage](#makefile-usage).
+- [Dockerfile](https://github.com/optimize_it/optimize-it/blob/master/docker/Dockerfile) for your package.
+- Always up-to-date dependencies with [`@dependabot`](https://dependabot.com/). You will only [enable it](https://docs.github.com/en/github/administering-a-repository/enabling-and-disabling-version-updates#enabling-github-dependabot-version-updates).
+- Automatic drafts of new releases with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter). You may see the list of labels in [`release-drafter.yml`](https://github.com/optimize_it/optimize-it/blob/master/.github/release-drafter.yml). Works perfectly with [Semantic Versions](https://semver.org/) specification.
+
+### Open source community features
+
+- Ready-to-use [Pull Requests templates](https://github.com/optimize_it/optimize-it/blob/master/.github/PULL_REQUEST_TEMPLATE.md) and several [Issue templates](https://github.com/optimize_it/optimize-it/tree/master/.github/ISSUE_TEMPLATE).
+- Files such as: `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md` are generated automatically.
+- [Semantic Versions](https://semver.org/) specification with [`Release Drafter`](https://github.com/marketplace/actions/release-drafter).
 
 ### Makefile usage
 
