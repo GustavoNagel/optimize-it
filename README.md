@@ -219,7 +219,7 @@ make lint
 the same as:
 
 ```bash
-make test && make check-codestyle && make mypy && make check-safety
+make test && make check-codestyle && make mypy
 ```
 
 </p>
