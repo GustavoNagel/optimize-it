@@ -5,29 +5,24 @@ Cite this algorithm as;
 numerical optimization problems", Applied Mathematics and Computation, 219, 81218144, 2013.
 """
 
-from typing import Any, Callable, Union
+from typing import Callable, Union
 
 import math
 
 import numpy as np
 import numpy.typing as npt
-from scipy._lib._util import check_random_state
 from scipy.optimize import Bounds, OptimizeResult
 
-
-class ObjectiveFunWrapper:
-    def __init__(self, func, *args):
-        self.func = func
-        self.args = args
-        # Number of objective function evaluations
-        self.nfev = 0
-
-    def fun(self, x):
-        self.nfev += 1
-        return self.func(x, *self.args)
+from optimize_it.base import OptimizationBase
+from optimize_it.functions import (
+    apply_random_boundary_control,
+    generate_random_population,
+    get_rand_boolean,
+)
+from optimize_it.wrapper import ObjectiveFunWrapper
 
 
-class BSA:
+class BSA(OptimizationBase):
     """Backtracking Search Optimization Algorithm.
 
     A population-based iterative EA designed to be a global minimizer.
@@ -65,39 +60,8 @@ class BSA:
         dim_rate: int = 3,
         seed: Union[np.random.RandomState, int, None] = None,
     ) -> None:
-        self.generations = generations
-        self.pop_size = pop_size
+        super().__init__(generations, pop_size, seed)
         self.dim_rate = dim_rate
-        self.rand_state = check_random_state(seed)
-
-    def generate_population(self, bounds: Bounds) -> npt.NDArray[np.float64]:
-        return (bounds.ub - bounds.lb) * self.rand_state.random_sample(  # type: ignore [no-any-return]
-            (self.pop_size, bounds.lb.size)
-        ) + bounds.lb
-
-    def boundary_control(
-        self, pop: npt.NDArray[np.float64], bounds: Bounds
-    ) -> npt.NDArray[np.float64]:
-        lb_residual, ub_residual = bounds.residual(pop)
-        lb_negative_indexes = np.nonzero(lb_residual < 0)
-        pop[lb_negative_indexes] = np.array(
-            [
-                bounds.lb[i]
-                if self.get_rand_boolean()
-                else (self.rand_state.rand() * (bounds.ub[i] - bounds.lb[i]) + bounds.lb[i])
-                for i in lb_negative_indexes[1]
-            ]
-        )
-        ub_negative_indexes = np.nonzero(ub_residual < 0)
-        pop[ub_negative_indexes] = np.array(
-            [
-                bounds.ub[i]
-                if self.get_rand_boolean()
-                else (self.rand_state.rand() * (bounds.ub[i] - bounds.lb[i]) + bounds.lb[i])
-                for i in ub_negative_indexes[1]
-            ]
-        )
-        return pop
 
     def get_scale_factor(self, strategy: str = "standard brownian-walk") -> float:
         """Get walking random scale factor based on walk strategy."""
@@ -105,9 +69,6 @@ class BSA:
             "standard brownian-walk": self.rand_state.normal(scale=3),
             "brownian-walk": self.rand_state.standard_gamma(4),
         }[strategy]
-
-    def get_rand_boolean(self) -> bool:
-        return bool(self.rand_state.randint(2))
 
     def change_multiple(self, row: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         """Change multiple individual characteristics randomly selected."""
@@ -125,7 +86,7 @@ class BSA:
         self, pop: npt.NDArray[np.float64], historical_pop: npt.NDArray[np.float64]
     ) -> npt.NDArray[np.float64]:
         """Determine the historical population to be used for calculating the search direction."""
-        if self.get_rand_boolean():
+        if get_rand_boolean(self.rand_state):
             historical_pop = pop
         return self.rand_state.permutation(historical_pop)  # type: ignore [no-any-return]
 
@@ -136,10 +97,12 @@ class BSA:
         F = self.get_scale_factor()
         changes_map = np.zeros((self.pop_size, bounds.lb.size))
         changes_map = np.apply_along_axis(
-            self.change_one if self.get_rand_boolean() else self.change_multiple, 1, changes_map
+            self.change_one if get_rand_boolean(self.rand_state) else self.change_multiple,
+            1,
+            changes_map,
         )
         offsprings = pop + (changes_map * F) * (historical_pop - pop)
-        return self.boundary_control(offsprings, bounds)
+        return apply_random_boundary_control(offsprings, bounds, self.rand_state)
 
     def apply_selection_II(
         self,
@@ -184,8 +147,10 @@ class BSA:
             cause of the termination.
             See `OptimizeResult` for a description of other attributes.
         """
-        pop = self.generate_population(bounds)
-        historical_pop = self.generate_population(bounds)  # swarm-memory of BSA
+        pop = generate_random_population(self.pop_size, bounds, self.rand_state)
+        historical_pop = generate_random_population(
+            self.pop_size, bounds, self.rand_state
+        )  # swarm-memory of BSA
         func_wrapped = ObjectiveFunWrapper(func)
         fitness_pop = self.calculate_fitness(func_wrapped, pop)
         for _ in range(self.generations):
@@ -195,14 +160,4 @@ class BSA:
             pop, fitness_pop = self.apply_selection_II(
                 pop, fitness_pop, offsprings, fitness_offsprings
             )
-            min_index = np.argmin(fitness_pop)
-
-        return OptimizeResult(
-            success=True,
-            status=0,
-            x=pop[min_index],
-            fun=fitness_pop[min_index],
-            nfev=func_wrapped.nfev,
-            nit=self.generations,
-            message=["Maximum number of iteration reached"],
-        )
+        return self.get_optimize_result(pop, fitness_pop, func_wrapped)
