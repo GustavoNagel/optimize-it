@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 from scipy.optimize import Bounds, OptimizeResult
 
-from optimize_it.firefly import Firefly
+from optimize_it import Firefly
 from optimize_it.wrapper import ObjectiveFunWrapper
 
 

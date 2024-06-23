@@ -3,6 +3,9 @@
 import sys
 from importlib import metadata as importlib_metadata
 
+from optimize_it.bsa import BSA
+from optimize_it.firefly import Firefly
+
 
 def get_version() -> str:
     try:
@@ -12,3 +15,4 @@ def get_version() -> str:
 
 
 version: str = get_version()
+__all__ = ["version", "BSA", "Firefly"]

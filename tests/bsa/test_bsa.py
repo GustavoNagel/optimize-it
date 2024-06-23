@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 from scipy.optimize import Bounds, OptimizeResult
 
-from optimize_it.bsa import BSA
+from optimize_it import BSA
 
 
 @pytest.fixture
