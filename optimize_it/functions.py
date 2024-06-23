@@ -43,17 +43,21 @@ def apply_random_boundary_control(
     lb_negative_indexes, ub_negative_indexes = get_indexes_trespassing_bounds(pop, bounds)
     pop[lb_negative_indexes] = np.array(
         [
-            bounds.lb[i]
-            if get_rand_boolean(rand_state)
-            else (rand_state.rand() * (bounds.ub[i] - bounds.lb[i]) + bounds.lb[i])
+            (
+                bounds.lb[i]
+                if get_rand_boolean(rand_state)
+                else (rand_state.rand() * (bounds.ub[i] - bounds.lb[i]) + bounds.lb[i])
+            )
             for i in lb_negative_indexes[1]
         ]
     )
     pop[ub_negative_indexes] = np.array(
         [
-            bounds.ub[i]
-            if get_rand_boolean(rand_state)
-            else (rand_state.rand() * (bounds.ub[i] - bounds.lb[i]) + bounds.lb[i])
+            (
+                bounds.ub[i]
+                if get_rand_boolean(rand_state)
+                else (rand_state.rand() * (bounds.ub[i] - bounds.lb[i]) + bounds.lb[i])
+            )
             for i in ub_negative_indexes[1]
         ]
     )
