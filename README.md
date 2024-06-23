@@ -2,14 +2,14 @@
 
 <div align="center">
 
-[![Build status](https://github.com/optimize_it/optimize-it/workflows/build/badge.svg?branch=master&event=push)](https://github.com/optimize_it/optimize-it/actions?query=workflow%3Abuild)
+[![Build status](https://github.com/GustavoNagel/optimize-it/actions/workflows/build.yml/badge.svg?branch=master&event=push)](https://github.com/GustavoNagel/optimize-it/actions/workflows/build.yml?branch=master&event=push)
 [![Python Version](https://img.shields.io/pypi/pyversions/optimize-it.svg)](https://pypi.org/project/optimize-it/)
-[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/optimize_it/optimize-it/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
+[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/GustavoNagel/optimize-it/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/optimize_it/optimize-it/blob/master/.pre-commit-config.yaml)
-[![Semantic Versions](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--versions-e10079.svg)](https://github.com/optimize_it/optimize-it/releases)
-[![License](https://img.shields.io/github/license/optimize_it/optimize-it)](https://github.com/GustavoNagel/optimize-it/blob/master/LICENSE)
+[![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/GustavoNagel/optimize-it/blob/master/.pre-commit-config.yaml)
+[![Semantic Versions](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--versions-e10079.svg)](https://github.com/GustavoNagel/optimize-it/releases)
+[![License](https://img.shields.io/github/license/GustavoNagel/optimize-it)](https://github.com/GustavoNagel/optimize-it/blob/master/LICENSE)
 ![Coverage Report](assets/images/coverage.svg)
 
 Meta heuristic algorithms used for solving optimization problems.
