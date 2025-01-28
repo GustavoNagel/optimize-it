@@ -40,7 +40,7 @@ scipy = "^1.11.1"
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.9"
 darglint = "^1.8.1"
-isort = {extras = ["colors"], version = "^5.13.2"}
+isort = {extras = ["colors"], version = "^6.0.0"}
 mypy = "^1.10.0"
 pre-commit = "^4.0.1"
 pydocstyle = "^6.3.0"
