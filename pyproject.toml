@@ -52,7 +52,7 @@ coverage = "^7.5.3"
 coverage-badge = "^1.1.1"
 pytest-html = "^4.1.1"
 pytest-cov = "^6.0.0"
-black = {version = "^24.4.2", allow-prereleases = true}
+black = {version = "^25.1.0", allow-prereleases = true}
 
 [tool.black]
 # https://github.com/psf/black
